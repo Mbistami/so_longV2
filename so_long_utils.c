@@ -6,7 +6,7 @@
 /*   By: mbistami <mbistami@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 20:46:53 by mbistami          #+#    #+#             */
-/*   Updated: 2022/02/14 04:29:25 by mbistami         ###   ########.fr       */
+/*   Updated: 2022/02/24 04:43:32 by mbistami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,16 @@ int	draw_animated_coin (t_game_data *data)
             draw_map(data, 1);
         }
         if (data->coin_data.count == data->coin_data.frames * 800)
+        {
             data->coin_data.frames++;
+            data->portal_data.frames++;
+        }
         if (data->coin_data.count++ >= 4800)
             data->coin_data.count = 0;
         if (data->coin_data.frames >= 6)
             data->coin_data.frames = 0;
+        if (data->portal_data.frames >= 14)
+            data->portal_data.frames = 0;
     }
 	return (0);
 }
@@ -102,8 +107,10 @@ void draw_asset (t_point point, t_game_data *data, int i)
     char    *map;
     int     img_h;
     int     img_w;
+    int     portal_frames;
 
     map = data->map;
+    portal_frames = 0;
     if (map[i] == '1' && map[i] != 10)
     {
         if (((i + 1) % (data->info.min_line_len + 1) == 1 || (i + 1) % (data->info.min_line_len + 1) == data->info.min_line_len)
@@ -120,10 +127,15 @@ void draw_asset (t_point point, t_game_data *data, int i)
             mlx_put_image_to_window(data->vars.mlx, data->vars.win, data->assets.items.coin[data->coin_data.frames], point.x, point.y);
             data->info.draw_coins = 1;
         }
-        else if (map[i] == 'E' && data->info.collectible_count)
-            mlx_put_image_to_window(data->vars.mlx, data->vars.win, data->assets.world.walls, point.x, point.y);
-        else if (map[i] == 'E' && !data->info.collectible_count)
-            mlx_put_image_to_window(data->vars.mlx, data->vars.win, data->assets.items.coin[data->coin_data.frames], point.x, point.y);
+        else if (map[i] == 'E')
+        {
+            if (data->portal_data.is_open)
+                mlx_put_image_to_window(data->vars.mlx, data->vars.win, data->assets.items.portal[data->portal_data.frames], point.x, point.y);
+            else
+                mlx_put_image_to_window(data->vars.mlx, data->vars.win, data->assets.items.portal[13], point.x, point.y);
+        }
+        // else if (map[i] == 'E' && !data->info.collectible_count)
+        //     mlx_put_image_to_window(data->vars.mlx, data->vars.win, data->assets.items.coin[data->coin_data.frames], point.x, point.y);
         printf("%d\n", data->info.collectible_count);
         set_heading(data, map[i], point);
     }

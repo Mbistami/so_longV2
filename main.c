@@ -6,7 +6,7 @@
 /*   By: mbistami <mbistami@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 19:23:04 by mbistami          #+#    #+#             */
-/*   Updated: 2022/02/14 04:55:49 by mbistami         ###   ########.fr       */
+/*   Updated: 2022/02/24 04:39:56 by mbistami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int handle_errors(t_game_data *data, int argv, char **argc)
 		}
 		else if (!ft_strlen(data->map))
 			printf("Error: empty map\n");
+		printf("Map->%s\n", data->map);
 	}
 	else
 	{
@@ -39,6 +40,61 @@ int handle_errors(t_game_data *data, int argv, char **argc)
 		return (0);
 	}
 	return (1);
+}
+
+void load_coin_assets (t_game_data *data)
+{
+	int img_w;
+	int img_h;
+	char *string;
+	int i;
+
+	string = ft_strdup("./assets/coin_frame_1.xpm");
+	printf("collectible count on loading assets: %d\n", data->info.collectible_count);
+	data->assets.items.coin = malloc(sizeof(void *) * 6);
+	data->coin_data.count = 0;
+	data->coin_data.frames = 0;
+	// data->assets.items.coin[0] = mlx_xpm_file_to_image(data->vars.mlx, string, &img_w, &img_h);
+	i = 0;
+	while(i != 6)
+	{
+		string[ft_strlen(string) - 5] = i + '1';
+		printf("%d\n", i);
+		data->assets.items.coin[i] = mlx_xpm_file_to_image(data->vars.mlx, string, &img_w, &img_h);
+		mlx_put_image_to_window(data->vars.mlx, data->vars.win, data->assets.items.coin[i], 0, 0);
+		i++;
+	}
+	free(string);
+	i = 0;
+}
+
+void load_portal_assets (t_game_data *data)
+{
+	int img_w;
+	int img_h;
+	char *string;
+	int i;
+	int j;
+
+	string = ft_strdup("./assets/portal_frame_1.xpm");
+	data->assets.items.portal = malloc(sizeof(void *) * 15);
+	i = 0;
+	j = 0;
+	while (i != 14)
+	{
+		if (i == 9)
+		{
+			free(string);
+			string = ft_strdup("./assets/portal_frame_10.xpm");
+			j = 0;
+		}
+		string[ft_strlen(string) - 5] = j + '1';
+		data->assets.items.portal[i] = mlx_xpm_file_to_image(data->vars.mlx, string, &img_w, &img_h);
+		mlx_put_image_to_window(data->vars.mlx, data->vars.win, data->assets.items.portal[i], 0, 32);
+		i++;
+		j++;
+	}
+	free(string);
 }
 
 void load_assets (t_game_data *data)
@@ -59,32 +115,44 @@ void load_assets (t_game_data *data)
     data->assets.world.water = mlx_xpm_file_to_image(data->vars.mlx, relative_path, &img_w, &img_h);
     relative_path = "/Users/mbistami/so_long/Character.xpm";
     data->assets.player = mlx_xpm_file_to_image(data->vars.mlx, relative_path, &img_w, &img_h);
-    string = ft_strdup("./assets/coin_frame_1.xpm");
-	printf("collectible count on loading assets: %d\n", data->info.collectible_count);
-	data->assets.items.coin = malloc(sizeof(void *) * 6);
-	data->coin_data.count = 0;
-	data->coin_data.frames = 0;
-	// data->assets.items.coin[0] = mlx_xpm_file_to_image(data->vars.mlx, string, &img_w, &img_h);
-	while(i != 6)
-	{
-		string[ft_strlen(string) - 5] = i + '1';
-		printf("%d\n", i);
-		data->assets.items.coin[i] = mlx_xpm_file_to_image(data->vars.mlx, string, &img_w, &img_h);
-		mlx_put_image_to_window(data->vars.mlx, data->vars.win, data->assets.items.coin[i], 0, 0);
-		i++;
-	}
-	free(string);
+	data->portal_data.is_open = 0;
+    
 	// data->assets.items.portal = malloc(sizeof(void *) * )
-	
+	load_portal_assets(data);
+	load_coin_assets(data);
 }
 
+void update_game_data (t_game_data *data)
+{
+    int i;
+
+    i =0;
+    data->info.collectible_count = 0;
+    data->info.exit_count = 0;
+    while (data->map[i])
+    {
+        if (data->map[i] == 'C')
+            data->info.collectible_count++;
+        else if (data->map[i] == 'E')
+            data->info.exit_count++;
+        i++;
+    }
+    if (!data->info.collectible_count)
+		data->portal_data.is_open = 1;
+}
+        
 int key_hook(int keycode, t_game_data *data)
 {
 	if (data->in_game)
 	{
-		printf("%d\n", keycode);
 		make_moves(data, keycode);
 		mlx_clear_window(data->vars.mlx, data->vars.win);
+		update_game_data(data);
+		if (data->portal_data.is_open)
+		{
+			data->in_game = 0;
+			return;
+		}
 		draw_map(data, 0);
 	}
 	else
@@ -95,7 +163,6 @@ int key_hook(int keycode, t_game_data *data)
 		data->in_game = 1;
 		mlx_hook(data->vars.win, 2, 0, key_hook, data);
 	}
-	printf("%d", data->in_game = 1);
 	return (0);
 }
 
@@ -103,12 +170,14 @@ int ft_exit(t_game_data *data)
 {
 	free(data->map);
     exit(0);
-    return (0);
+	return (0);
 }
 
 int main(int argv, char **argc)
 {
 	t_game_data data;
+
+	data.info.error = 0;
 	if(!handle_errors(&data, argv, argc))
 		return (1);
 	data.vars.mlx = mlx_init();

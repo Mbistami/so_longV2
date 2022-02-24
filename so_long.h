@@ -6,7 +6,7 @@
 /*   By: mbistami <mbistami@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 19:37:52 by mbistami          #+#    #+#             */
-/*   Updated: 2022/02/14 04:18:17 by mbistami         ###   ########.fr       */
+/*   Updated: 2022/02/24 03:56:11 by mbistami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,13 @@ typedef struct s_coin_data
 	int frames;
 } t_coin_data;
 
+typedef struct s_portal_data
+{
+	int count;
+	int frames;
+	int is_open;
+} t_portal_data;
+
 
 typedef struct	s_game_info
 {
@@ -79,6 +86,7 @@ typedef struct	s_game_data
 	t_assets	assets;
 	t_game_info	info;
 	t_coin_data coin_data;
+	t_portal_data portal_data;
 }				t_game_data;
 
 typedef struct	s_animated_coin

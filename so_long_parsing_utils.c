@@ -6,7 +6,7 @@
 /*   By: mbistami <mbistami@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 19:54:11 by mbistami          #+#    #+#             */
-/*   Updated: 2022/02/14 04:48:40 by mbistami         ###   ########.fr       */
+/*   Updated: 2022/02/24 04:13:13 by mbistami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,10 @@ int parse_map(t_game_data *data, int fd)
     container = (char *)malloc(sizeof(char));
     line = 0;
     container[0] = '\0';
+    printf("[%s]%d\n", readed_line, data->info.error);
     while (readed_line && !data->info.error)
     {
+        printf("%s\n", readed_line);
         col = 0;
         while (readed_line[col])
         {
