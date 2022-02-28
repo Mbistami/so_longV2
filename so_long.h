@@ -6,7 +6,7 @@
 /*   By: mbistami <mbistami@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 19:37:52 by mbistami          #+#    #+#             */
-/*   Updated: 2022/02/24 03:56:11 by mbistami         ###   ########.fr       */
+/*   Updated: 2022/02/28 21:56:18 by mbistami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct 	s_assets_items
 {
 	void		**coin;
 	void		**portal;
+	void		**trap;
 	void		*enemy;
 }				t_assets_items;
 
@@ -82,6 +83,8 @@ typedef struct	s_game_data
     int     	player_heading;
     char    	*map;
 	int			in_game;
+	int			player_won;
+	int			made_moves;
 	t_vars 		vars;
 	t_assets	assets;
 	t_game_info	info;
@@ -103,3 +106,6 @@ int		parse_map(t_game_data *data, int fd);
 void 	draw_map (t_game_data *data, int ignore_collectibles);
 void	make_moves(t_game_data *data, int keycode);
 int		draw_animated_coin (t_game_data *data);
+void	draw_winner_screen (t_game_data *data, int won);
+char	*ft_itoa(int n);
+char	*ft_strjoin(const char *s1, const char *s2);

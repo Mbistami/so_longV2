@@ -6,7 +6,7 @@
 /*   By: mbistami <mbistami@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 20:46:53 by mbistami          #+#    #+#             */
-/*   Updated: 2022/02/24 04:43:32 by mbistami         ###   ########.fr       */
+/*   Updated: 2022/02/28 23:08:56 by mbistami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,6 @@ t_point new_point(int x, int y)
     point.y = y;
     return (point);
 }
-
-// t_animated_coin *new_coin (t_game_data *data)
-// {
-// 	data->coin_data.count = 0;
-//     data->coin_data.frames = 0;
-
-// 	coin = (t_animated_coin *)malloc(sizeof(t_animated_coin));
-// 	coin->frames = 0;
-// 	coin->count = 0;
-//     coin->data = *data;
-// 	return (coin);
-// }
 
 void handle_coin (t_game_data *data, char type, t_point point)
 {
@@ -55,19 +43,33 @@ void handle_coin (t_game_data *data, char type, t_point point)
     }
 }
 
+void draw_game(t_game_data *data)
+{
+    char *string;
+    char *moves;
+
+    moves = ft_itoa(data->made_moves);
+    string = ft_strjoin("Moves :", moves);
+    mlx_clear_window(data->vars.mlx, data->vars.win);
+    draw_map(data, 1);
+    mlx_string_put(data->vars.mlx, data->vars.win, data->info.square_size / 2, 3, 0x00FF00, string);
+    free(string);
+    free(moves);
+}
+
 int	draw_animated_coin (t_game_data *data)
 {
 	
 	int x = 0;
     int y = 0;
     int i = 0;
-    //printf("$$$$$$$$%s\n", data->map);
+    
     if (data->in_game)
     {
+        
         if (data->coin_data.count == data->coin_data.frames * 800)
         {
-            mlx_clear_window(data->vars.mlx, data->vars.win);
-            draw_map(data, 1);
+            draw_game(data);
         }
         if (data->coin_data.count == data->coin_data.frames * 800)
         {
@@ -130,13 +132,19 @@ void draw_asset (t_point point, t_game_data *data, int i)
         else if (map[i] == 'E')
         {
             if (data->portal_data.is_open)
+            {
                 mlx_put_image_to_window(data->vars.mlx, data->vars.win, data->assets.items.portal[data->portal_data.frames], point.x, point.y);
+                if (data->player_won)
+                {
+                    mlx_put_image_to_window(data->vars.mlx, data->vars.win, data->assets.player, point.x, point.y);
+                    data->player_won = 2;
+                }
+            }
             else
                 mlx_put_image_to_window(data->vars.mlx, data->vars.win, data->assets.items.portal[13], point.x, point.y);
         }
-        // else if (map[i] == 'E' && !data->info.collectible_count)
-        //     mlx_put_image_to_window(data->vars.mlx, data->vars.win, data->assets.items.coin[data->coin_data.frames], point.x, point.y);
-        printf("%d\n", data->info.collectible_count);
+        else if (map[i] == 'T')
+            mlx_put_image_to_window(data->vars.mlx, data->vars.win, data->assets.items.trap[data->portal_data.frames], point.x, point.y);
         set_heading(data, map[i], point);
     }
 }
@@ -158,7 +166,8 @@ void draw_map (t_game_data *data, int ignore_collectibles)
         
     while(map[i])
     {
-        draw_asset(new_point(x, y), data, i);
+        if (data->in_game)
+            draw_asset(new_point(x, y), data, i);
         if (map[i] != 10)
             x += square_size;
         else 
@@ -170,43 +179,125 @@ void draw_map (t_game_data *data, int ignore_collectibles)
     }
 }
 
-void up_down_moves(t_game_data *data, int keycode)
+int validate_move(t_game_data *data, int keycode)
 {
-   
+    if (((data->map[data->player - (data->info.min_line_len + 1)] != '1' && keycode == 126) || (data->map[data->player + (data->info.min_line_len + 1)] != '1' && keycode == 125) || (data->map[data->player - 1] != '1' && keycode == 123) || (data->map[data->player + 1] != '1' && keycode == 124)))
     {
-        if (keycode == 126 && data->map[data->player - (data->info.min_line_len + 1)] != '1')
+        if ((((data->map[data->player + (data->info.min_line_len + 1)] == 'E' && keycode == 125) || (data->map[data->player - (data->info.min_line_len + 1)] == 'E' && keycode == 126) || (data->map[data->player - 1] == 'E' && keycode == 123) || (data->map[data->player + 1] == 'E' && keycode == 124)) && data->info.collectible_count == 0))
         {
-            data->map[data->player] = '0';
-            data->map[data->player - (data->info.min_line_len + 1)] = 'P';
-            data->player = data->player - (data->info.min_line_len + 1);
-            data->player_heading = 1;
+            data->made_moves++;
+            return (2);
         }
-        else if (keycode == 125 && data->map[data->player + (data->info.min_line_len + 1)] != '1')
+        else if ((data->map[data->player - (data->info.min_line_len + 1)] == 'E' && keycode == 126) || (data->map[data->player + (data->info.min_line_len + 1)] == 'E' && keycode == 125) || ((data->map[data->player - 1] == 'E' && keycode == 123) || (data->map[data->player + 1] == 'E' && keycode == 124)))
+            return (0);
+        else if ((((data->map[data->player + (data->info.min_line_len + 1)] == 'T' && keycode == 125) || (data->map[data->player - (data->info.min_line_len + 1)] == 'T' && keycode == 126) || (data->map[data->player - 1] == 'T' && keycode == 123) || (data->map[data->player + 1] == 'T' && keycode == 124))))
+            return (3);
+        else
         {
-            data->map[data->player] = '0';
-            data->map[data->player + (data->info.min_line_len + 1)] = 'P';
-            data->player = data->player + (data->info.min_line_len + 1);
-            data->player_heading = 2;
+            data->made_moves++;
+            return (1);
         }
     }
+    return (0);
+}
+
+void draw_winner_screen (t_game_data *data, int win)
+{
+    char *moves;
+    char *string;
+    char *tmp;
+
+    moves = ft_itoa(data->made_moves);
+    string = ft_strjoin("WITH ", moves);
+    tmp = ft_strjoin(string, " MOVES");
+    mlx_destroy_window(data->vars.mlx, data->vars.win);
+    data->vars.win = mlx_new_window(data->vars.mlx, 500, 500, "./so_long/you_won");
+    if (win == 1)
+    {
+        mlx_string_put(data->vars.mlx, data->vars.win, 215, 250, 0x00FF00, "YOU WON");
+        mlx_string_put(data->vars.mlx, data->vars.win, 190, 268, 0x00FF00, tmp);
+    }
+    else
+    {
+        mlx_string_put(data->vars.mlx, data->vars.win, 215, 250, 0xFF0000, "YOU LOST");
+        mlx_string_put(data->vars.mlx, data->vars.win, 190, 268, 0xFF0000, tmp);
+    }
+    free(moves);
+    free(string);
+    free(tmp);
+}
+
+void player_won (t_game_data *data)
+{
+    data->player_won = 1;
+    data->map[data->player] = '0';
+    data->in_game = 0;
+    mlx_clear_window(data->vars.mlx, data->vars.win);
+    draw_winner_screen(data, 1);
+}
+
+void player_lost (t_game_data *data)
+{
+    data->player_won = 1;
+    data->map[data->player] = '0';
+    data->in_game = 0;
+    mlx_clear_window(data->vars.mlx, data->vars.win);
+    draw_winner_screen(data, 2);
+}
+
+void up_down_moves(t_game_data *data, int keycode)
+{
+    if (keycode == 126 && validate_move(data, keycode) == 1)
+    {
+        data->map[data->player] = '0';
+        data->map[data->player - (data->info.min_line_len + 1)] = 'P';
+        data->player = data->player - (data->info.min_line_len + 1);
+    }
+    else if (keycode == 125 && validate_move(data,keycode) == 1)
+    {
+        data->map[data->player] = '0';
+        data->map[data->player + (data->info.min_line_len + 1)] = 'P';
+        data->player = data->player + (data->info.min_line_len + 1);
+    }
+    else if (validate_move(data, keycode) == 2)
+        player_won(data);
+    else if (validate_move(data, keycode) == 3)
+        player_lost(data);
+}
+
+int get_heading(int keycode)
+{
+    if (keycode == 124)
+        return (3);
+    else if (keycode == 123)
+        return (4);
+    else if (keycode == 126)
+        return (1);
+    else
+        return (2);
+    return 0;
 }
 
 void make_moves(t_game_data *data, int keycode)
 {
     if (keycode == 126 || keycode == 125)
         up_down_moves(data, keycode);
-    else if (keycode == 124 && data->map[data->player + 1] != '1')
+    else if (keycode == 124 && validate_move(data, keycode) == 1)
     {
         data->map[data->player] = '0';
         data->map[data->player + 1] = 'P';
         data->player++;
-        data->player_heading = 3;
     }
-    else if (keycode == 123 && data->map[data->player - 1] != '1')
+    else if (keycode == 123 && validate_move(data, keycode) == 1)
     {
         data->map[data->player] = '0';
         data->map[data->player - 1] = 'P';
         data->player--;
-        data->player_heading = 4;
     }
+    else if (validate_move(data, keycode) == 2)
+        player_won(data);
+    else if (validate_move(data, keycode) == 3)
+        player_lost(data);
+    data->player_heading = get_heading(keycode);
+    set_heading(data, 'P', new_point(0, 0));
 }
