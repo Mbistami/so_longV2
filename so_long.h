@@ -105,7 +105,16 @@ typedef struct	s_animated_coin
 int		parse_map(t_game_data *data, int fd);
 void 	draw_map (t_game_data *data, int ignore_collectibles);
 void	make_moves(t_game_data *data, int keycode);
-int		draw_animated_coin (t_game_data *data);
+int		handle_auto_draw (t_game_data *data);
 void	draw_winner_screen (t_game_data *data, int won);
 char	*ft_itoa(int n);
 char	*ft_strjoin(const char *s1, const char *s2);
+//
+void	load_assets (t_game_data *data);
+t_point new_point (int x, int y);
+void set_heading(t_game_data *data, char type, t_point point);
+int validate_move(t_game_data *data, int keycode);
+int handle_errors(t_game_data *data, int argv, char **argc);
+int handle_click(int keycode, t_game_data *data);
+int handle_exit (t_game_data *data);
+void draw_game(t_game_data *data);

@@ -55,7 +55,6 @@ int validate_char(char* readed_line, t_game_data *data, int col, int line)
             return 0;
         save_game_data(readed_line[col], data, col, line);
     }
-    printf("ddddddddddd%c\n", readed_line[col]);
     return (1);
 }
 
@@ -63,6 +62,15 @@ void save_map (t_game_data *data, char *map, int lines)
 {
 	data->map = map;
 	data->info.lines_count = lines;
+}
+
+void init_parser (int fd, char **readed_line, char **container, t_game_data *data)
+{
+    *readed_line = get_next_line(fd);
+	if (*readed_line)
+    	data->info.min_line_len = ft_strlen(*readed_line) - 1;
+    *container = (char *)malloc(sizeof(char));
+    *container[0] = '\0';
 }
 
 int parse_map(t_game_data *data, int fd)
@@ -73,31 +81,21 @@ int parse_map(t_game_data *data, int fd)
     int     line;
     int     col;
 
-    readed_line = get_next_line(fd);
-	if (readed_line)
-    	data->info.min_line_len = ft_strlen(readed_line) - 1;
-    container = (char *)malloc(sizeof(char));
+    init_parser(fd, &readed_line, &container, data);
     line = 0;
-    container[0] = '\0';
-    printf("[%s]%d\n", readed_line, data->info.error);
     while (readed_line && !data->info.error)
     {
-        printf("%s\n", readed_line);
         col = 0;
         while (readed_line[col])
-        {
             if (!validate_char(readed_line, data, col++, line))
                 return (0);
-        }   
         tmp = ft_strjoin(container, readed_line);
         free(container);
         container = tmp;
-        // free(tmp);
         free(readed_line);
         readed_line = get_next_line(fd);
         line++;
     }
-    // free(readed_line);
     save_map(data, container, line);
     return (1);
 }
