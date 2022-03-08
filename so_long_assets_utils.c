@@ -6,7 +6,7 @@
 /*   By: mbistami <mbistami@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 00:38:47 by mbistami          #+#    #+#             */
-/*   Updated: 2022/03/08 02:12:40 by mbistami         ###   ########.fr       */
+/*   Updated: 2022/03/08 02:40:47 by mbistami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ void	load_coin_assets(t_game_data *data)
 		string[ft_strlen(string) - 5] = i + '1';
 		data->assets.items.coin[i]
 			= mlx_xpm_file_to_image(data->vars.mlx, string, &img_w, &img_h);
-		mlx_put_image_to_window(data->vars.mlx,
-			data->vars.win, data->assets.items.coin[i], 0, 0);
 		i++;
 	}
 	free(string);
@@ -60,8 +58,7 @@ void	load_portal_assets(t_game_data *data)
 		string[ft_strlen(string) - 5] = j++ + '1';
 		data->assets.items.portal[i] = mlx_xpm_file_to_image(data->vars.mlx,
 				string, &img_w, &img_h);
-		mlx_put_image_to_window(data->vars.mlx, data->vars.win,
-			data->assets.items.portal[i++], 0, 32);
+		i++;
 	}
 	free(string);
 }
@@ -109,8 +106,7 @@ void	load_traps_assets(t_game_data *data)
 		string[ft_strlen(string) - 5] = j++ + '1';
 		data->assets.items.trap[i]
 			= mlx_xpm_file_to_image(data->vars.mlx, string, &img_w, &img_h);
-		mlx_put_image_to_window(data->vars.mlx,
-			data->vars.win, data->assets.items.trap[i++], 0, 64);
+		i++;
 	}
 	free(string);
 }
@@ -122,4 +118,5 @@ void	load_assets(t_game_data *data)
 	load_portal_assets(data);
 	load_traps_assets(data);
 	load_coin_assets(data);
+	printf("Successfully loaded assets\n");
 }

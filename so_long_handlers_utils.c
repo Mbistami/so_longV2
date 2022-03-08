@@ -6,7 +6,7 @@
 /*   By: mbistami <mbistami@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 00:37:20 by mbistami          #+#    #+#             */
-/*   Updated: 2022/03/08 02:14:51 by mbistami         ###   ########.fr       */
+/*   Updated: 2022/03/08 03:01:07 by mbistami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,13 @@ int	handle_errors(t_game_data *data, int argv, char **argc)
 {
 	int	fd;
 
-	if (argv - 1)
+	if (argv - 1 && is_valid_file(argc[1]))
 	{
 		fd = open(argc[1], O_RDONLY);
+		write(1, "%d\n", 2);
 		if (fd < 0)
 		{
-			perror("Error");
+			perror("error");
 			return (0);
 		}
 		else if (!parse_map(data, fd))
@@ -83,7 +84,6 @@ int	handle_errors(t_game_data *data, int argv, char **argc)
 		}
 		else if (!ft_strlen(data->map))
 			printf("Error: empty map\n");
-		printf("Map->%s\n", data->map);
 	}
 	else
 	{

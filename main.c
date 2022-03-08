@@ -6,17 +6,17 @@
 /*   By: mbistami <mbistami@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 19:23:04 by mbistami          #+#    #+#             */
-/*   Updated: 2022/03/08 00:37:39 by mbistami         ###   ########.fr       */
+/*   Updated: 2022/03/08 02:52:00 by mbistami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./so_long.h"
 
-void	init(t_game_data *data, int argv, char **argc)
+int	init(t_game_data *data, int argv, char **argc)
 {
 	data->info.error = 0;
 	if (!handle_errors(data, argv, argc))
-		return ;
+		return (0);
 	data->vars.mlx = mlx_init();
 	data->info.square_size = 32;
 	data->info.window_width = data->info.square_size * data->info.min_line_len;
@@ -31,12 +31,14 @@ void	init(t_game_data *data, int argv, char **argc)
 		(160 / 2) - (160 / 8), 0x556E86, "PERESS ANY BUTTON TO START!");
 	mlx_hook(data->vars.win, 2, 0, handle_click, data);
 	mlx_hook(data->vars.win, 17, 0, handle_exit, data);
+	return (1);
 }
 
 int	main(int argv, char **argc)
 {
 	t_game_data	data;
 
-	init(&data, argv, argc);
+	if (!init(&data, argv, argc))
+		return (1);
 	mlx_loop(data.vars.mlx);
 }
