@@ -6,7 +6,7 @@
 /*   By: mbistami <mbistami@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 00:46:54 by mbistami          #+#    #+#             */
-/*   Updated: 2022/03/08 00:59:23 by mbistami         ###   ########.fr       */
+/*   Updated: 2022/03/08 02:05:30 by mbistami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	draw_portal(t_game_data *data, t_point point)
 		mlx_put_image_to_window(data->vars.mlx, data->vars.win,
 			data->assets.items.portal[data->portal_data.frames],
 			point.x, point.y);
-		if (data->player_won)
+		if (data->player_won != 4 && data->player_won)
 		{
 			mlx_put_image_to_window(data->vars.mlx, data->vars.win,
 				data->assets.player, point.x, point.y);
@@ -45,6 +45,9 @@ void	draw_items(t_game_data *data, int i, t_point point)
 		mlx_put_image_to_window(data->vars.mlx, data->vars.win,
 			data->assets.items.trap[data->portal_data.frames],
 			point.x, point.y);
+	else if (data->map[i] == 'P')
+		mlx_put_image_to_window(data->vars.mlx, data->vars.win,
+			data->assets.player, point.x, point.y);
 }
 
 void	draw_wall(t_game_data *data, int i, t_point point)
@@ -106,32 +109,4 @@ void	draw_map(t_game_data *data, int ignore_collectibles)
 		}
 		i++;
 	}
-}
-
-void	draw_winner_screen(t_game_data *data, int win)
-{
-	char	*moves;
-	char	*string;
-	char	*tmp;
-
-	moves = ft_itoa(data->made_moves);
-	string = ft_strjoin("WITH ", moves);
-	tmp = ft_strjoin(string, " MOVES");
-	mlx_destroy_window(data->vars.mlx, data->vars.win);
-	data->vars.win = mlx_new_window(data->vars.mlx, 500, 500, "./so_long/you_won");
-	if (win == 1)
-	{
-		mlx_string_put(data->vars.mlx, data->vars.win, 215, 250, 0x00FF00, "YOU WON");
-		mlx_string_put(data->vars.mlx, data->vars.win, 190, 268, 0x00FF00, tmp);
-	}
-	else
-	{
-		mlx_string_put(data->vars.mlx, data->vars.win, 215, 250, 0xFF0000, "YOU LOST");
-		mlx_string_put(data->vars.mlx, data->vars.win, 190, 268, 0xFF0000, tmp);
-	}
-	mlx_hook(data->vars.win, 2, 0, handle_click, data);
-	data->player_won = 4;
-	free(moves);
-	free(string);
-	free(tmp);
 }

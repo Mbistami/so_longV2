@@ -6,7 +6,7 @@
 /*   By: mbistami <mbistami@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 19:37:52 by mbistami          #+#    #+#             */
-/*   Updated: 2022/03/08 00:57:37 by mbistami         ###   ########.fr       */
+/*   Updated: 2022/03/08 01:59:15 by mbistami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,4 +115,9 @@ int		handle_errors(t_game_data *data, int argv, char **argc);
 int		handle_click(int keycode, t_game_data *data);
 int		handle_exit(t_game_data *data);
 void	draw_game(t_game_data *data);
+int		get_heading(int keycode);
+
+void	up_down_moves(t_game_data *data, int keycode);
+void	player_won(t_game_data *data);
+void	player_lost(t_game_data *data);
 #endif

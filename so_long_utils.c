@@ -6,7 +6,7 @@
 /*   By: mbistami <mbistami@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 20:46:53 by mbistami          #+#    #+#             */
-/*   Updated: 2022/03/08 00:46:27 by mbistami         ###   ########.fr       */
+/*   Updated: 2022/03/08 02:06:56 by mbistami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ void	set_heading(t_game_data *data, char type, t_point point)
 		else
 			data->assets.player = mlx_xpm_file_to_image(data->vars.mlx,
 					"./assets/Character.xpm", &img_h, &img_h);
-		mlx_put_image_to_window(data->vars.mlx, data->vars.win,
-			data->assets.player, point.x, point.y);
 	}
 }
 
@@ -86,41 +84,4 @@ void	up_down_moves(t_game_data *data, int keycode)
 		player_won(data);
 	else if (validate_move(data, keycode) == 3)
 		player_lost(data);
-}
-
-int	get_heading(int keycode)
-{
-	if (keycode == 124)
-		return (3);
-	else if (keycode == 123)
-		return (4);
-	else if (keycode == 126)
-		return (1);
-	else
-		return (2);
-	return (0);
-}
-
-void	make_moves(t_game_data *data, int keycode)
-{
-	if (keycode == 126 || keycode == 125)
-		up_down_moves(data, keycode);
-	else if (keycode == 124 && validate_move(data, keycode) == 1)
-	{
-		data->map[data->player] = '0';
-		data->map[data->player + 1] = 'P';
-		data->player++;
-	}
-	else if (keycode == 123 && validate_move(data, keycode) == 1)
-	{
-		data->map[data->player] = '0';
-		data->map[data->player - 1] = 'P';
-		data->player--;
-	}
-	else if (validate_move(data, keycode) == 2)
-		player_won(data);
-	else if (validate_move(data, keycode) == 3)
-		player_lost(data);
-	data->player_heading = get_heading(keycode);
-	set_heading(data, 'P', new_point(0, 0));
 }
