@@ -6,7 +6,7 @@
 /*   By: mbistami <mbistami@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 00:37:20 by mbistami          #+#    #+#             */
-/*   Updated: 2022/03/08 03:01:07 by mbistami         ###   ########.fr       */
+/*   Updated: 2022/03/08 23:25:57 by mbistami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	update_game_data(t_game_data *data)
 int	handle_click(int keycode, t_game_data *data)
 {
 	if (keycode == 53 || data->player_won == 4)
-		handle_exit(data);
+		handle_exit(data, 0);
 	else if (data->in_game)
 	{
 		make_moves(data, keycode);
@@ -58,8 +58,10 @@ int	handle_click(int keycode, t_game_data *data)
 	return (0);
 }
 
-int	handle_exit(t_game_data *data)
+int	handle_exit(t_game_data *data, int is_error)
 {
+	if (is_error)
+		perror("Error");
 	free(data->map);
 	exit(1);
 }

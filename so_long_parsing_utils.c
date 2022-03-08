@@ -6,7 +6,7 @@
 /*   By: mbistami <mbistami@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 19:54:11 by mbistami          #+#    #+#             */
-/*   Updated: 2022/03/08 02:16:00 by mbistami         ###   ########.fr       */
+/*   Updated: 2022/03/08 23:26:33 by mbistami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	save_game_data(char c, t_game_data *data, int col, int lines)
 			if (lines >= 0)
 				data->player = lines * (data->info.min_line_len + 1) + col;
 		}
-		else if ((c != '0' && c != '1') && (c != 10 && c != 'X' && c != 'T'))
+		else if (!is_valid_character(c))
 			data->info.error = 1;
 	}
 	else if (c == 'C')
@@ -97,6 +97,8 @@ int	parse_map(t_game_data *data, int fd)
 		readed_line = get_next_line(fd);
 		line++;
 	}
+	if (data->info.error)
+		handle_exit(data, 1);
 	save_map(data, container, line);
 	return (1);
 }

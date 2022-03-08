@@ -6,7 +6,7 @@
 /*   By: mbistami <mbistami@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 19:23:04 by mbistami          #+#    #+#             */
-/*   Updated: 2022/03/08 02:52:00 by mbistami         ###   ########.fr       */
+/*   Updated: 2022/03/08 23:26:56 by mbistami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,5 @@ int	main(int argv, char **argc)
 	if (!init(&data, argv, argc))
 		return (1);
 	mlx_loop(data.vars.mlx);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mbistami <mbistami@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 19:37:52 by mbistami          #+#    #+#             */
-/*   Updated: 2022/03/08 02:48:01 by mbistami         ###   ########.fr       */
+/*   Updated: 2022/03/08 23:26:17 by mbistami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,9 +114,10 @@ int		handle_auto_draw(t_game_data *data);
 int		validate_move(t_game_data *data, int keycode);
 int		handle_errors(t_game_data *data, int argv, char **argc);
 int		handle_click(int keycode, t_game_data *data);
-int		handle_exit(t_game_data *data);
+int		handle_exit(t_game_data *data, int is_error);
 int		get_heading(int keycode);
 int		is_valid_file(char *filename);
 char	*ft_itoa(int n);
 char	*ft_strjoin(const char *s1, const char *s2);
+int		is_valid_character(char c);
 #endif
