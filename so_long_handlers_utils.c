@@ -6,7 +6,7 @@
 /*   By: mbistami <mbistami@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 00:37:20 by mbistami          #+#    #+#             */
-/*   Updated: 2022/03/08 00:38:40 by mbistami         ###   ########.fr       */
+/*   Updated: 2022/03/08 02:14:51 by mbistami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	handle_click(int keycode, t_game_data *data)
 	{
 		make_moves(data, keycode);
 		update_game_data(data);
-		draw_map(data, 0);
+		draw_map(data);
 		return (0);
 	}
 	else if (!data->player_won)
@@ -48,7 +48,7 @@ int	handle_click(int keycode, t_game_data *data)
 		data->vars.win = mlx_new_window(data->vars.mlx, data->info.window_width,
 				data->info.square_size * data->info.lines_count,
 				"./so_long/in_game");
-		draw_map(data, 1);
+		draw_map(data);
 		data->in_game = 1;
 		mlx_hook(data->vars.win, 2, 0, handle_click, data);
 		return (0);

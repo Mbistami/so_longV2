@@ -6,7 +6,7 @@
 /*   By: mbistami <mbistami@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 00:38:47 by mbistami          #+#    #+#             */
-/*   Updated: 2022/03/08 00:42:34 by mbistami         ###   ########.fr       */
+/*   Updated: 2022/03/08 02:12:40 by mbistami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,9 +117,6 @@ void	load_traps_assets(t_game_data *data)
 
 void	load_assets(t_game_data *data)
 {
-	void	*img;
-	char	*string;
-
 	data->portal_data.is_open = 0;
 	load_main_assets(data);
 	load_portal_assets(data);

@@ -6,7 +6,7 @@
 /*   By: mbistami <mbistami@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 19:54:11 by mbistami          #+#    #+#             */
-/*   Updated: 2022/03/08 01:57:56 by mbistami         ###   ########.fr       */
+/*   Updated: 2022/03/08 02:16:00 by mbistami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ void	save_game_data(char c, t_game_data *data, int col, int lines)
 
 int	validate_char(char *readed_line, t_game_data *data, int col, int line)
 {
-	if (ft_strlen(readed_line) - 1 != data->info.min_line_len)
+	if (ft_strlen(readed_line) - 1 != (size_t)data->info.min_line_len)
 	{
 		if (readed_line[ft_strlen(readed_line) - 1] == '\n')
 			return (0);
-		else if (ft_strlen(readed_line) != data->info.min_line_len)
+		else if (ft_strlen(readed_line) != (size_t)data->info.min_line_len)
 			return (0);
 	}
 	if ((line == 0) || readed_line[ft_strlen(readed_line) - 1] != '\n')

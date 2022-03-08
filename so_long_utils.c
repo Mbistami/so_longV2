@@ -6,7 +6,7 @@
 /*   By: mbistami <mbistami@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 20:46:53 by mbistami          #+#    #+#             */
-/*   Updated: 2022/03/08 02:06:56 by mbistami         ###   ########.fr       */
+/*   Updated: 2022/03/08 02:16:38 by mbistami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ void	draw_game(t_game_data *data)
 	moves = ft_itoa(data->made_moves);
 	string = ft_strjoin("Moves :", moves);
 	mlx_clear_window(data->vars.mlx, data->vars.win);
-	draw_map(data, 1);
+	draw_map(data);
 	mlx_string_put(data->vars.mlx, data->vars.win,
 		data->info.square_size / 2, 3, 0x00FF00, string);
 	free(string);
 	free(moves);
 }
 
-void	set_heading(t_game_data *data, char type, t_point point)
+void	set_heading(t_game_data *data, char type)
 {
 	int	img_h;
 

@@ -6,7 +6,7 @@
 /*   By: mbistami <mbistami@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 19:37:52 by mbistami          #+#    #+#             */
-/*   Updated: 2022/03/08 01:59:15 by mbistami         ###   ########.fr       */
+/*   Updated: 2022/03/08 02:16:50 by mbistami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 # include "./get_next_line/get_next_line.h"
 
 typedef struct s_point {
-	int	x;
-	int	y;
+	int			x;
+	int			y;
 }				t_point;
 
 typedef struct s_vars
@@ -46,22 +46,22 @@ typedef struct s_assets_items
 
 typedef struct s_assets
 {
+	void			*player;
 	t_assets_world	world;
 	t_assets_items	items;
-	void			*player;
 }				t_assets;
 
 typedef struct s_coin_data
 {
-	int	count;
-	int	frames;
+	int			count;
+	int			frames;
 }	t_coin_data;
 
 typedef struct s_portal_data
 {
-	int	count;
-	int	frames;
-	int	is_open;
+	int			count;
+	int			frames;
+	int			is_open;
 }	t_portal_data;
 
 typedef struct s_game_info
@@ -79,9 +79,9 @@ typedef struct s_game_info
 
 typedef struct s_game_data
 {
+	char			*map;
 	int				player;
 	int				player_heading;
-	char			*map;
 	int				in_game;
 	int				player_won;
 	int				made_moves;
@@ -90,34 +90,32 @@ typedef struct s_game_data
 	t_game_info		info;
 	t_coin_data		coin_data;
 	t_portal_data	portal_data;
-}				t_game_data;
+}					t_game_data;
 
 typedef struct s_animated_coin
 {
 	int			frames;
 	int			count;
 	t_game_data	data;
-}			t_animated_coin;
+}				t_animated_coin;
 
-int		parse_map(t_game_data *data, int fd);
-void	draw_map(t_game_data *data, int ignore_collectibles);
-void	make_moves(t_game_data *data, int keycode);
-int		handle_auto_draw(t_game_data *data);
-void	draw_winner_screen(t_game_data *data, int won);
-char	*ft_itoa(int n);
-char	*ft_strjoin(const char *s1, const char *s2);
-//
-void	load_assets(t_game_data *data);
 t_point	new_point(int x, int y);
-void	set_heading(t_game_data *data, char type, t_point point);
+void	draw_map(t_game_data *data);
+void	make_moves(t_game_data *data, int keycode);
+void	draw_winner_screen(t_game_data *data, int won);
+void	load_assets(t_game_data *data);
+void	set_heading(t_game_data *data, char type);
+void	draw_game(t_game_data *data);
+void	up_down_moves(t_game_data *data, int keycode);
+void	player_won(t_game_data *data);
+void	player_lost(t_game_data *data);
+int		parse_map(t_game_data *data, int fd);
+int		handle_auto_draw(t_game_data *data);
 int		validate_move(t_game_data *data, int keycode);
 int		handle_errors(t_game_data *data, int argv, char **argc);
 int		handle_click(int keycode, t_game_data *data);
 int		handle_exit(t_game_data *data);
-void	draw_game(t_game_data *data);
 int		get_heading(int keycode);
-
-void	up_down_moves(t_game_data *data, int keycode);
-void	player_won(t_game_data *data);
-void	player_lost(t_game_data *data);
+char	*ft_itoa(int n);
+char	*ft_strjoin(const char *s1, const char *s2);
 #endif

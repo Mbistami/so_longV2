@@ -6,7 +6,7 @@
 /*   By: mbistami <mbistami@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 01:46:41 by mbistami          #+#    #+#             */
-/*   Updated: 2022/03/08 02:06:31 by mbistami         ###   ########.fr       */
+/*   Updated: 2022/03/08 02:17:21 by mbistami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	make_moves(t_game_data *data, int keycode)
 	else if (validate_move(data, keycode) == 3)
 		player_lost(data);
 	data->player_heading = get_heading(keycode);
-	set_heading(data, 'P', new_point(0, 0));
+	set_heading(data, 'P');
 }
 
 void	draw_screen(t_game_data *data, int win, char *string)

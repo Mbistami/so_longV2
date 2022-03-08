@@ -6,7 +6,7 @@
 /*   By: mbistami <mbistami@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 00:46:54 by mbistami          #+#    #+#             */
-/*   Updated: 2022/03/08 02:05:30 by mbistami         ###   ########.fr       */
+/*   Updated: 2022/03/08 02:17:01 by mbistami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ void	draw_wall(t_game_data *data, int i, t_point point)
 {
 	if (((i + 1) % (data->info.min_line_len + 1) == 1 || (i + 1)
 			% (data->info.min_line_len + 1) == data->info.min_line_len)
-		|| (i < data->info.min_line_len) || i + data->info.min_line_len
+		|| (i < data->info.min_line_len)
+		|| (size_t)(i + data->info.min_line_len)
 		> ft_strlen(data->map))
 		mlx_put_image_to_window(data->vars.mlx, data->vars.win,
 			data->assets.world.walls, point.x, point.y);
@@ -66,8 +67,6 @@ void	draw_wall(t_game_data *data, int i, t_point point)
 void	draw_asset(t_point point, t_game_data *data, int i)
 {
 	char	*map;
-	int		img_h;
-	int		img_w;
 	int		portal_frames;
 
 	map = data->map;
@@ -83,11 +82,11 @@ void	draw_asset(t_point point, t_game_data *data, int i)
 		mlx_put_image_to_window(data->vars.mlx, data->vars.win,
 			data->assets.world.ground, point.x, point.y);
 		draw_items(data, i, point);
-		set_heading(data, map[i], point);
+		set_heading(data, map[i]);
 	}
 }
 
-void	draw_map(t_game_data *data, int ignore_collectibles)
+void	draw_map(t_game_data *data)
 {
 	int	x;
 	int	y;
