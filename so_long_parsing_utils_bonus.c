@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long_parsing_utils.c                            :+:      :+:    :+:   */
+/*   so_long_parsing_utils_bonus.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbistami <mbistami@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 19:54:11 by mbistami          #+#    #+#             */
-/*   Updated: 2022/03/09 19:46:51 by mbistami         ###   ########.fr       */
+/*   Updated: 2022/03/09 20:21:12 by mbistami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 void	save_game_data(char c, t_game_data *data, int col, int lines)
 {

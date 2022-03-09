@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long_extra_utils.c                              :+:      :+:    :+:   */
+/*   so_long_extra_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbistami <mbistami@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 01:46:41 by mbistami          #+#    #+#             */
-/*   Updated: 2022/03/08 02:17:50 by mbistami         ###   ########.fr       */
+/*   Updated: 2022/03/09 20:20:59 by mbistami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./so_long.h"
+#include "./so_long_bonus.h"
 
 int	get_heading(int keycode)
 {

@@ -1,4 +1,5 @@
 NAME=so_long
+NAME_BONUS=so_long_bonus
 SRC=so_long_assets_utils.c\
 	so_long_draw_utils.c\
 	so_long_extra_utils.c\
@@ -25,23 +26,18 @@ CC=gcc
 MLX_FLAGS=-lmlx -framework AppKit -framework OpenGL
 FLAGS=-Wall -Werror -Wextra
 
-all:
-	@echo Building game...
+all:$(NAME)
+bonus:$(NAME_BONUS)
+
+$(NAME):$(SRC)
 	@$(CC) $(SRC) $(MLX_FLAGS) $(FLAGS) -o $(NAME)
-	@echo Built Successfully!
-	@echo Start your game by using
-	@echo ./$(NAME) ./maps/[map_name].ber
-	
-bonus:
-	@echo Building game -BONUS-...
-	@$(CC) $(SRCB) $(MLX_FLAGS) $(FLAGS) -o $(NAME)_bonus
-	@echo Built Successfully!
-	@echo Start your game by using
-	@echo ./$(NAME)_bonus ./maps/[map_name]_bonus.ber
+
+$(NAME_BONUS):$(SRC)
+	@$(CC) $(SRCB) $(MLX_FLAGS) $(FLAGS) -o $(NAME_BONUS)
 clean:
 	@rm -rf $(NAME)
 	@rm -rf $(NAME)_bonus
-	@echo "CLEANED"
+	@echo "Cleaned"
 
 re: clean all
 fclean: clean

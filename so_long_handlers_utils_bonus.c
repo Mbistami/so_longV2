@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long_handlers_utils.c                           :+:      :+:    :+:   */
+/*   so_long_handlers_utils_bonus.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbistami <mbistami@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 00:37:20 by mbistami          #+#    #+#             */
-/*   Updated: 2022/03/09 19:50:20 by mbistami         ###   ########.fr       */
+/*   Updated: 2022/03/09 20:21:04 by mbistami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./so_long.h"
+#include "./so_long_bonus.h"
 
 void	update_game_data(t_game_data *data)
 {

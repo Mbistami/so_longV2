@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long_moves_utils.c                              :+:      :+:    :+:   */
+/*   so_long_moves_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbistami <mbistami@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 01:50:14 by mbistami          #+#    #+#             */
-/*   Updated: 2022/03/08 01:53:28 by mbistami         ###   ########.fr       */
+/*   Updated: 2022/03/09 20:21:09 by mbistami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./so_long.h"
+#include "./so_long_bonus.h"
 
 int	is_valide_move(t_game_data *data, int keycode)
 {

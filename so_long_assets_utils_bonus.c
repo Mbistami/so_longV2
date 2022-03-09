@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long_assets_utils.c                             :+:      :+:    :+:   */
+/*   so_long_assets_utils_bonus.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbistami <mbistami@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 00:38:47 by mbistami          #+#    #+#             */
-/*   Updated: 2022/03/08 23:27:14 by mbistami         ###   ########.fr       */
+/*   Updated: 2022/03/09 20:20:30 by mbistami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./so_long.h"
+#include "./so_long_bonus.h"
 
 void	load_coin_assets(t_game_data *data)
 {

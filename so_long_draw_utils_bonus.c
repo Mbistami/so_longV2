@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long_draw_utils.c                               :+:      :+:    :+:   */
+/*   so_long_draw_utils_bonus.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbistami <mbistami@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 00:46:54 by mbistami          #+#    #+#             */
-/*   Updated: 2022/03/08 02:17:01 by mbistami         ###   ########.fr       */
+/*   Updated: 2022/03/09 20:20:54 by mbistami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./so_long.h"
+#include "./so_long_bonus.h"
 
 void	draw_portal(t_game_data *data, t_point point)
 {
