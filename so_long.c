@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbistami <mbistami@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 19:23:04 by mbistami          #+#    #+#             */
-/*   Updated: 2022/03/08 23:26:56 by mbistami         ###   ########.fr       */
+/*   Updated: 2022/03/09 19:43:34 by mbistami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 int	init(t_game_data *data, int argv, char **argc)
 {
 	data->info.error = 0;
+	data->info.starting_pos_count = 0;
+	data->info.collectible_count = 0;
+	data->info.exit_count = 0;
 	if (!handle_errors(data, argv, argc))
 		return (0);
 	data->vars.mlx = mlx_init();

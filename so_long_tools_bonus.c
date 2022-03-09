@@ -6,7 +6,7 @@
 /*   By: mbistami <mbistami@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 01:58:07 by mbistami          #+#    #+#             */
-/*   Updated: 2022/03/09 20:07:08 by mbistami         ###   ########.fr       */
+/*   Updated: 2022/03/08 23:30:33 by mbistami         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	is_valid_file(char *filename)
 
 int	is_valid_character(char c)
 {
-	if (c == '0' || c == '1' || c == 10 || c == 'X')
+	if (c == '0' || c == '1' || c == 10 || c == 'X' || c == 'T')
 		return (1);
 	return (0);
 }
