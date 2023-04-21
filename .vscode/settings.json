@@ -1,7 +1,8 @@
 {
-	"files.associations": {
-		"fcntl.h": "c",
-		"so_long.h": "c",
-		"get_next_line.h": "c"
-	}
+  "files.associations": {
+    "fcntl.h": "c",
+    "so_long.h": "c",
+    "get_next_line.h": "c",
+    "stdio.h": "c"
+  }
 }
